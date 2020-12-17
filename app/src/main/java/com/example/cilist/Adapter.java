@@ -6,12 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -42,6 +40,17 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         Glide.with(mContext)
                 .load(url).diskCacheStrategy(DiskCacheStrategy.RESOURCE)
                 .error(R.mipmap.logo).into(holder.gambar);
+        holder.klik.setOnClickListener(v -> {
+            Intent intent = new Intent(mContext, DetailActivity.class);
+            intent.putExtra("title", mResultItem.get(position).getOriginalTitle());
+            intent.putExtra("image", mResultItem.get(position).getBackdropPath());
+            intent.putExtra("popularity", mResultItem.get(position).getPopularity().toString());
+            intent.putExtra("bahasa", mResultItem.get(position).getOriginalLanguage());
+            intent.putExtra("tanggal", mResultItem.get(position).getReleaseDate());
+            intent.putExtra("overview", mResultItem.get(position).getOverview());
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
+        });
     }
 
     @Override

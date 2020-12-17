@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import com.example.cilist.alarm.AlarmActivity;
 import com.example.cilist.api.MovieModel;
 import com.example.cilist.api.ResultsItem;
 import com.example.cilist.source.ApiConfig;
@@ -20,6 +24,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView scroll;
@@ -27,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Adapter adapter;
     private SharedPreferences mPreferences;
     private String sharedPrefFile = "com.example.cilist";
+    private Text alarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         scroll = findViewById(R.id.scroll);
+        alarm = findViewById(R.id.alarm);
     }
 
     @Override
@@ -71,5 +79,23 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         preferencesEditor.apply();
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.alarm:
+                Intent intent = new Intent(MainActivity.this, AlarmActivity.class);
+                String mOrderMessage = null;
+                intent.putExtra(EXTRA_MESSAGE, mOrderMessage);
+                startActivity(intent);
+                return true;
+            default:
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

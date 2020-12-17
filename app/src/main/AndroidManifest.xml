@@ -4,7 +4,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,7 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cilist">
-        <activity android:name=".DetailActivity"></activity>
+
+        <activity
+            android:name=".alarm.AlarmActivity"
+            android:parentActivityName=".MainActivity"
+            android:label="Alarm">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
+        <receiver
+            android:name=".alarm.AlarmReceiver"
+            android:enabled="true"
+            android:exported="false"/>
+
         <activity
             android:name=".Splash"
             android:theme="@style/Theme.AppCompat.NoActionBar">
@@ -22,7 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".MainActivity" />
+        <activity android:name=".DetailActivity"></activity>
+
     </application>
 
 </manifest>
